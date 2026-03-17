@@ -13,10 +13,10 @@ Skills are markdown files (`SKILL.md`) that teach Claude Code domain-specific co
 ## Skills Overview
 
 | Skill | Domain | Description |
-|------------------|---------------------|---------------------------------|
+|-------------------|---------------------|---------------------------------|
 | **creating-analysis-projects** | Project Setup | Scaffolds bioinformatics analysis projects with strict separation of code (git-tracked) from data. Enforces the `read/` → `scripts/` → `checkpoints/` → `write/` directory architecture. |
 | **writing-r-code** | R Coding | Tidyverse-first R coding conventions. Self-contained code chunks with `Libraries → Inputs → Processing → Outputs` structure. Seurat v5 layer-based patterns. Mandatory Context7 MCP verification for function calls. |
-| **writing-qmd-scientific** | Quarto Documents | Standards for scientific Quarto notebooks. All explanatory prose must be bullet points (no paragraphs). Hashpipe (`#|`) chunk options. Parameter justification tables after every code block. |
+| **writing-qmd-scientific** | Quarto Documents | Standards for scientific Quarto notebooks. All explanatory prose must be bullet points (no paragraphs). Hashpipe (`#\|`) chunk options. Parameter justification tables after every code block. |
 | **writing-labarchive-entries** | Lab Notebooks | Verbose, structured lab documentation with numbered sections. Four entry types: Reference Datasets, Analysis Pipelines, Tool Evaluations, Educational Notes. PubMed MCP integration for citations. |
 | **developing-r-packages** | R Packages | Full R package lifecycle following Wickham & Bryan's *R Packages*. roxygen2 documentation, testthat testing, semantic versioning, GitHub Actions CI/CD, pkgdown sites. |
 | **md-to-html** | Document Conversion | Converts markdown files into self-contained HTML documents via Quarto. Wraps `.md` content in a `.qmd` with a preferred YAML header (darkly theme, TOC, embedded resources) and renders with `quarto render`. Preserves content as-is—conversion only, no restructuring. |
