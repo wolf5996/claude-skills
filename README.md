@@ -19,6 +19,7 @@ Skills are markdown files (`SKILL.md`) that teach Claude Code domain-specific co
 | **writing-qmd-scientific** | Quarto Documents | Standards for scientific Quarto notebooks. All explanatory prose must be bullet points (no paragraphs). Hashpipe (`#\|`) chunk options. Parameter justification tables after every code block. |
 | **writing-labarchive-entries** | Lab Notebooks | Verbose, structured lab documentation with numbered sections. Four entry types: Reference Datasets, Analysis Pipelines, Tool Evaluations, Educational Notes. PubMed MCP integration for citations. |
 | **developing-r-packages** | R Packages | Full R package lifecycle following Wickham & Bryan's *R Packages*. roxygen2 documentation, testthat testing, semantic versioning, GitHub Actions CI/CD, pkgdown sites. |
+| **tailoring-applications** | Job Applications | Full pipeline for tailoring CVs and cover letters from job adverts. Parses job postings (text, URL, or PDF), scaffolds application directories, and produces tailored application documents for academic and industry roles. |
 | **md-to-html** | Document Conversion | Converts markdown files into self-contained HTML documents via Quarto. Wraps `.md` content in a `.qmd` with a preferred YAML header (darkly theme, TOC, embedded resources) and renders with `quarto render`. Preserves content as-is—conversion only, no restructuring. |
 
 ## Skill Dependencies
@@ -31,8 +32,9 @@ creating-analysis-projects
 └── writing-qmd-scientific  (document structure)
     └── writing-r-code      (inline code patterns)
 
-writing-labarchive-entries  (standalone — references PubMed MCP)
+writing-labarchive-entries   (standalone — references PubMed MCP)
 developing-r-packages       (standalone — R package conventions)
+tailoring-applications      (standalone — CV and cover letter pipeline)
 md-to-html                  (standalone — converts .md → .qmd → .html via Quarto)
 ```
 
@@ -42,7 +44,8 @@ md-to-html                  (standalone — converts .md → .qmd → .html via 
 2. `writing-r-code` — code patterns used everywhere
 3. `writing-qmd-scientific` — how to document analysis pipelines
 4. `developing-r-packages` and `writing-labarchive-entries` — advanced/specialized
-5. `md-to-html` — converting finished markdown to polished HTML
+5. `tailoring-applications` — CV and cover letter pipeline
+6. `md-to-html` — converting finished markdown to polished HTML
 
 ## Prerequisites
 
