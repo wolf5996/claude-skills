@@ -185,6 +185,58 @@ Ignores everything by default; only `scripts/` is tracked:
 !/scripts
 ```
 
+### Tracking empty data directories with `.gitkeep`
+
+Git does not track empty directories. To make `read/`, `checkpoints/`, and `write/` appear in the repo (so collaborators see the expected structure without committing any data), place an empty `.gitkeep` placeholder file in each:
+
+```bash
+touch read/.gitkeep checkpoints/.gitkeep write/figures/.gitkeep write/tables/.gitkeep
+```
+
+Then un-ignore only those placeholders in the root `.gitignore`:
+
+```gitignore
+# Ignore everything
+*
+*/
+
+# Whitelist: tracked code and docs
+!scripts/
+!scripts/**
+!docs/
+!docs/**
+
+# Expose .gitkeep placeholders so directory structure is visible in the repo
+# (directory contents remain gitignored — data never touches the repo)
+!read/.gitkeep
+!checkpoints/.gitkeep
+!write/figures/.gitkeep
+!write/tables/.gitkeep
+
+# Belt-and-braces: explicitly ignore directory contents even if rules above change
+read/*
+!read/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+write/figures/*
+!write/figures/.gitkeep
+write/tables/*
+!write/tables/.gitkeep
+```
+
+**Why this works:** `.gitkeep` is just an empty file — git has no special treatment for it. The name is a community convention. Once real data files land in the directory, `.gitkeep` sits there harmlessly and can be deleted if desired.
+
+**Why whitelist rules need both `!dir/` and `!dir/**`:**
+
+When git hits an ignored directory it stops traversing into it entirely — it never evaluates rules about the directory's contents. So you always need two lines:
+
+```gitignore
+!scripts/    # step 1: tell git to open the door and walk in
+!scripts/**  # step 2: un-ignore everything found inside at any depth
+```
+
+`!scripts/**` alone does nothing because git never enters the ignored directory to see the files. And `*` (single wildcard) only matches one level deep — `**` is needed for recursive un-ignoring.
+
 ### scripts/.gitignore — script-specific ignores
 
 Place a second `.gitignore` inside `scripts/` to exclude rendered outputs and caches:
