@@ -188,60 +188,75 @@ Write the cover letter and CV content. This is the core of the skill.
 
 ### 3A: Cover Letter
 
-#### Academic Cover Letters
+The cover letter is **not a list of qualifications** — the CV handles that. The cover letter argues for **product-market fit**: why the institution needs someone like you, and why you are that person. The reader should finish thinking "this is an obvious hire," not "this person meets the criteria."
 
-**Structure:** Section headings that map directly to the advert's criteria. Do NOT use traditional letter format — use structured sections.
+#### Structure: Product-Market Fit
 
 ```
 \begin{flushright}
-Dr Badran Elshenawy\\
+\textcolor{accent}{\textbf{Dr Badran Elshenawy}}\\
 Nuffield Department of Medicine\\
 University of Oxford\\
 Oxford OX3 7FZ\\[0.6em]
 [Date]
 \end{flushright}
 
-**Application — [Role Title]**\
-[Institution]
+\textcolor{accent}{\textbf{[Supporting Statement / Application] --- [Role Title] (Ref: [number])}}\
+[Institution / Department]
 
 Dear [Hiring Committee / named contact],
 
-[Opening paragraph — who you are, why you're applying, 2-3 sentence pitch]
+## Where [Institution/Group] is heading
+[1 paragraph: what the group/institute is doing, what direction they are moving in,
+and what kind of person that direction calls for. Show you understand their context.
+End with a line connecting yourself to that context.]
 
-# [Section mapped to advert criterion 1]
-[CAR-structured paragraphs]
+## What I bring
+[1-2 paragraphs: your strongest relevant experience, framed as delivery not credentials.
+Show what you have already done that maps to what they need. Let facts speak.
+Be confident but not arrogant — "I have done X" not "I am the best at X".]
 
-# [Section mapped to advert criterion 2]
-[CAR-structured paragraphs]
+## [Research / Domain / Technical depth section — title varies by role]
+[1-2 paragraphs: demonstrate that your research or technical work is directly
+relevant to the role. Connect your daily work to their questions.
+Show the overlap is real, not just theoretical.]
 
-...
+## Why [Institution] specifically
+[1 paragraph: genuine, specific reasons. Timing, culture, partnerships, direction.
+Not generic praise. Show you have done your homework.]
 
-# Why [Institution], and Why Now
-[Closing section]
+## What I am offering
+[2-3 sentence summary. What you bring, what you want to do, openness to discuss.]
 
-\vspace{1.5em}
+\vspace{0.6em}
 Yours sincerely,
-\vspace{0.3em}
-Dr Badran Elshenawy
+\vspace{0.2em}
+\textcolor{accent}{\textbf{Dr Badran Elshenawy}}
 ```
 
 **Rules:**
-- Structure point-by-point against the advert's criteria (essential, desirable, key responsibilities)
-- Section headings map directly to what the advert asks for
-- Be direct, not poetic — state what was done, the outcome, and how it maps to the role
-- Use CAR framework throughout: Context, Action, Result — all three must be present
-- Pitch hard — confidence is expected
+- **Product-market fit, not criterion checklist.** The CV lists qualifications; the cover letter argues for fit
+- **Research the institution.** Use WebSearch to understand what they are building, what direction they are moving in, and what problems the hire is meant to solve. Reference specifics (papers, programmes, partnerships)
+- Section headings should be narrative, not bureaucratic (e.g., "Where the lab is heading" not "Essential Criterion 1")
+- Be direct but not arrogant. Confident but humble. "I have done X" not "I am the obvious choice"
+- Avoid contrastive reframing and negation (e.g., "not just X, but Y"). State the positive directly
+- Light use of em dashes only. Prefer commas, semicolons, or parentheses
+- Use CAR framework where giving examples, but embed it in narrative, not as a checklist
 - British English throughout
 - No word padding — every sentence must earn its place
+- If there is a gap in your profile, address it briefly (one sentence) and move on. Do not dwell on weaknesses
+
+#### Supporting Statements (Oxford-style)
+
+When the advert specifically asks for a "supporting statement that addresses each selection criterion," the product-market fit structure still works, but ensure each criterion is visibly addressed within the narrative sections. The reader should be able to tick off criteria while reading a compelling argument, not a bulleted list.
 
 #### Industry Cover Letters
 
-Same structural approach (sections mapped to criteria, CAR framework), but:
+Same product-market fit approach, but:
 
-- **Lead with skills and methodology**, not area of study
-- Emphasise transferable technical capabilities
+- **Lead with what you deliver**, not your academic pedigree
+- Emphasise transferable technical capabilities and outcomes
 - Frame academic work in industry-relevant terms (e.g., "production-quality pipelines" not "research workflows")
-- Be explicit about what you bring that a pure ML engineer or pure biologist would not
 - Shorter — industry reviewers scan faster
 
 ### 3B: CV Tailoring
@@ -305,6 +320,51 @@ If the CV exceeds 2 pages, go back to Phase 3 and trim.
 
 ---
 
+## Phase 5: OUTREACH
+
+After rendering, draft a concise outreach email to the PI or hiring manager. Save as `outreach_<name>.md` in the application directory.
+
+### Finding the contact
+
+Use WebSearch to find the PI's email address. Check institutional staff pages, lab websites, and departmental directories. UCL emails typically follow `f.lastname@ucl.ac.uk`, Oxford follows `firstname.lastname@department.ox.ac.uk`.
+
+### Outreach email structure
+
+```markdown
+# Outreach — [Name]
+
+**To:** [email]
+**Subject:** Application for [Role Title] (Ref [number])
+
+---
+
+[Greeting]
+
+[1 sentence: you applied, linking to the role]
+
+[1 paragraph: genuine interest in their specific work. Reference a paper, tool,
+programme, or direction. Show you have read something real, not just the advert.]
+
+[1 paragraph: specific value proposition. What you bring that connects to what
+they are building. Be concrete — name datasets, methods, or experience that
+maps directly to their needs.]
+
+[1 sentence: ask for a meeting, offer flexibility]
+
+Best,
+Badran
+```
+
+### Rules
+
+- Short. 4-5 paragraphs maximum.
+- Genuine interest, not flattery.
+- The value proposition paragraph should be specific and separate from the interest paragraph.
+- Light on em dashes. No contrastive negation ("not just X, but Y").
+- Tone: direct, warm, professional. Not formal, not casual.
+
+---
+
 ## QMD Formatting
 
 ### Cover Letter YAML Front Matter
@@ -327,25 +387,37 @@ format:
         linestretch: 1.15
         indent: false
         colorlinks: true
-        linkcolor: black
-        urlcolor: black
+        linkcolor: NavyBlue
+        urlcolor: NavyBlue
         include-in-header:
             text: |
+                \usepackage[dvipsnames]{xcolor}
+                \definecolor{accent}{HTML}{1B3A5C}
+                \definecolor{rulecolor}{HTML}{3B7EA1}
                 \usepackage{ragged2e}
                 \justifying
                 \usepackage{enumitem}
                 \setlength{\parskip}{0.5em}
                 \setlength{\parindent}{0pt}
                 \usepackage{titlesec}
-                \titleformat{\section}{\normalfont\large\bfseries}{}{0em}{}
-                \titleformat{\subsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+                \titleformat{\section}{\normalfont\large\bfseries\color{accent}}{}{0em}{}
+                \titleformat{\subsection}{\normalfont\normalsize\bfseries\color{accent}}{}{0em}{}
                 \titlespacing*{\section}{0pt}{1.0em}{0.3em}
                 \titlespacing*{\subsection}{0pt}{0.6em}{0.2em}
                 \usepackage{fancyhdr}
                 \pagestyle{fancy}
                 \fancyhf{}
                 \renewcommand{\headrulewidth}{0pt}
-                \fancyfoot[C]{\footnotesize\thepage}
+                \fancyfoot[C]{\footnotesize\color{rulecolor}%
+                    \href{mailto:badran.elshenawy@ndm.ox.ac.uk}{badran.elshenawy@ndm.ox.ac.uk}
+                    \enspace\textbar\enspace
+                    \href{https://orcid.org/0000-0001-5672-8517}{ORCID}
+                    \enspace\textbar\enspace
+                    \href{https://github.com/wolf5996}{GitHub}
+                    \enspace\textbar\enspace
+                    \href{https://www.linkedin.com/in/dr-badran-m-e-65414b113/}{LinkedIn}
+                    \enspace\textbar\enspace
+                    \href{https://badran-elshenawy.netlify.app/}{Blog}}
 ---
 ```
 
@@ -444,8 +516,8 @@ Computational biology for liver disease:
 
 ### Education
 
-- DPhil Oncology, University of Oxford (2020-2025)
-- MSci Pharmacology, University of Bristol (First Class Honours, 2016-2020)
+- DPhil Oncology, University of Oxford (2020-2024)
+- MSci Pharmacology, University of Bristol (First Class Honours, 2016-2020) — Neuropharmacology focus; master's research at Janssen R&D, Belgium (mouse models of neurodegeneration, gait analysis for therapeutic efficacy assessment)
 
 ### Teaching
 
@@ -473,12 +545,17 @@ For every application, confirm:
 
 - [ ] `description.md` accurately reflects the advert (no hallucinated requirements)
 - [ ] `assessment.md` is brutally honest about fit percentage
-- [ ] Cover letter sections map to advert criteria
+- [ ] Cover letter argues product-market fit, not just lists qualifications
+- [ ] Cover letter shows research into the institution (specifics, not generic praise)
+- [ ] Cover letter tone: confident but humble, no contrastive negation, light em dash usage
 - [ ] All CAR examples have Context, Action, AND Result
 - [ ] No overclaiming on Nature Communications or PacBio pipeline
 - [ ] British English throughout
-- [ ] CV is ≤ 2 pages after rendering
+- [ ] CV is ≤ 2 pages after rendering (no orphan lines, no excessive whitespace)
+- [ ] CV includes Academic Citizenship section (for academic applications)
 - [ ] Elevator pitch is tailored to this specific role
 - [ ] CV bullet ordering matches application type (academic vs industry)
 - [ ] Word limits respected (if stated in advert)
 - [ ] Both PDFs render cleanly with no LaTeX errors
+- [ ] Outreach email drafted and saved as `outreach_<name>.md`
+- [ ] DPhil dates: 2020-2024 (not 2025)
