@@ -122,6 +122,58 @@ For most projects, use a **whitelisting approach** to avoid accidentally committ
 !README.md
 !*.py
 !*.qmd
+!*.md
+!pyproject.toml
+!uv.lock
 ```
 
 This is more secure than blacklisting (which can miss new file types). Use blacklisting only when the project has many unpredictable generated files (e.g., LaTeX build artefacts).
+
+### Common Generated Files to Exclude
+
+**Never track these file types:**
+
+| File Type | Pattern | Why Exclude |
+|-----------|---------|-------------|
+| HTML renders | `*.html` | Generated from Quarto/R Markdown/source files |
+| Jupyter checkpoints | `.ipynb_checkpoints/` | Auto-generated save points |
+| Rendered documents | `*.pdf`, `*.docx` | Build outputs from source |
+| Data files | `*.rds`, `*.h5ad`, `*.csv` (large) | Raw data and checkpoints |
+| Virtual environments | `.venv/`, `venv/`, `env/` | Reproducible via requirements |
+| IDE files | `.vscode/`, `.idea/`, `*.swp` | User-specific settings |
+| OS files | `.DS_Store`, `Thumbs.db` | System-generated |
+| Build artifacts | `__pycache__/`, `*.pyc`, `node_modules/` | Compiled/generated code |
+
+**Key principle:** Track the *source* (`.qmd`, `.Rmd`, `.py`), not the *output* (`.html`, `.pdf`). If you can regenerate it, don't version control it.
+
+### Intermediate and Output Directories
+
+**Never track these directories:**
+
+```
+# Data and checkpoints (regenerate from source)
+checkpoints/
+read/
+write/
+output/
+results/
+
+# Generated documents
+*.html
+*.pdf
+*.docx
+*.pptx
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Build artifacts
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+```
+
+**Key principle:** If you can regenerate it from source code, don't version control it. Track the recipe, not the product.
