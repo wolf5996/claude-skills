@@ -104,6 +104,50 @@ The blank line requirement is a pandoc rule, not a Hugo or Quarto rule. It appli
 
 ---
 
+## Rule 2: Avoid em dashes
+
+Use em dashes (`—`) sparingly. They are easy to overuse and usually have a cleaner alternative.
+
+### In bullet points: bold + colon, not em dash
+
+When a bullet point has a title and a description, **bold the title and follow it with a colon**.
+
+**Wrong:**
+
+```markdown
+- RNA velocity — uses splicing ratios to infer transcriptional direction
+- Monocle3 — handles branching trajectories well
+```
+
+**Correct:**
+
+```markdown
+- **RNA velocity:** uses splicing ratios to infer transcriptional direction
+- **Monocle3:** handles branching trajectories well
+```
+
+### In prose: rewrite rather than reach for an em dash
+
+Em dashes in prose often signal a sentence that should be restructured. Prefer commas, parentheses, colons, or splitting into two sentences.
+
+**Wrong:**
+
+```markdown
+The model converged quickly — likely because the learning rate was well-tuned.
+This step is critical — without it, downstream clustering will fail.
+```
+
+**Correct:**
+
+```markdown
+The model converged quickly, likely because the learning rate was well-tuned.
+This step is critical: without it, downstream clustering will fail.
+```
+
+Only use an em dash when no other punctuation fits and the interruption is intentional.
+
+---
+
 ## Verification before rendering
 
 Before rendering any document, grep for list items that immediately follow non-blank lines:
