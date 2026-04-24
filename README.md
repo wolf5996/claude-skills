@@ -118,7 +118,7 @@ Both tools can point to the same GitHub repo. The shared skill content stays in 
 **Cherry-pick individual skills:**
 
 ``` bash
-git clone https://github.com/wolf5996/agentic-skills.git /tmp/agentic-skills
+git clone https://github.com/wolf5996/agentic-skills.git ~/.codex/skills
 cp -r /tmp/agentic-skills/writing-r-code ~/.claude/skills/
 rm -rf /tmp/agentic-skills
 ```
