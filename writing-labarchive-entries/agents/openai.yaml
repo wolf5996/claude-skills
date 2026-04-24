@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing LabArchive Entries"
+  short_description: "Draft structured lab notebook entries"
+  default_prompt: "Use $writing-labarchive-entries to document this workflow as a LabArchive entry."

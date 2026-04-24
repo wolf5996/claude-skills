@@ -1,0 +1,4 @@
+interface:
+  display_name: "Markdown to HTML"
+  short_description: "Render Markdown to self-contained HTML"
+  default_prompt: "Use $md-to-html to convert this Markdown document into a self-contained HTML file."

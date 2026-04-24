@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creating Analysis Projects"
+  short_description: "Scaffold clean R analysis projects"
+  default_prompt: "Use $creating-analysis-projects to scaffold a new analysis project with this workflow."

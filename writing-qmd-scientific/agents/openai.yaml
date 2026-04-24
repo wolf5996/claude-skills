@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing QMD Scientific"
+  short_description: "Write scientific Quarto notebooks"
+  default_prompt: "Use $writing-qmd-scientific to structure this scientific Quarto notebook."

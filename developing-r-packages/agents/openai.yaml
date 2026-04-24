@@ -1,0 +1,4 @@
+interface:
+  display_name: "Developing R Packages"
+  short_description: "Build and maintain R packages"
+  default_prompt: "Use $developing-r-packages to update this R package following the repo conventions."

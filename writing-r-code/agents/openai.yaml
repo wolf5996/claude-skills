@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing R Code"
+  short_description: "Apply R analysis coding conventions"
+  default_prompt: "Use $writing-r-code to write or revise R code with these analysis conventions."

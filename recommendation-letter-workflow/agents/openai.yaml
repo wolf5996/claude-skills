@@ -1,0 +1,3 @@
+display_name: Recommendation Letter Workflow
+short_description: Create, tailor, and render Quarto-based recommendation letters for application repositories.
+default_prompt: Use the repository conventions and produce concise, grounded recommendation-letter materials. Create or update dated application folders, write `qmd` letters, add `description.qmd` notes, and render PDFs with Quarto.

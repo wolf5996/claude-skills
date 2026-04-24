@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tailoring Applications"
+  short_description: "Tailor CVs and cover letters"
+  default_prompt: "Use $tailoring-applications to tailor application documents for this job advert."
