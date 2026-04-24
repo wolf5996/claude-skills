@@ -67,9 +67,15 @@ featured: true
 
 ## Workflow for adding a post
 
-### 1. Apply md-format
+### 1. Invoke md-format
 
-Before writing or placing any `.rmd`, invoke the `md-format` skill to catch formatting issues — especially missing blank lines before bullet lists.
+**REQUIRED.** Use the Skill tool to invoke `md-format` on the source file before doing anything else. This is non-negotiable — do not skip it, even for short posts.
+
+`md-format` checks for:
+- Missing blank lines before bullet lists (pandoc collapses them horizontally if absent)
+- Em dashes in bullet points that should be bold + colon (`**term:** description`)
+
+Apply every fix `md-format` identifies before proceeding to the next step.
 
 ### 2. Create the .rmd
 
