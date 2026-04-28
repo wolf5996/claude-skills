@@ -56,15 +56,16 @@ Structured breakdown of the advert. Follow this template:
 
 ## Role Summary
 
-**Title:** [Full title]
-**Employer:** [Organisation]
-**Location:** [City, remote/hybrid/on-site]
-**Salary:** [If stated, otherwise "Not disclosed"]
-**Type:** [Full-time/Part-time, Academic/Industry]
-**Focus:** [One-sentence summary of what the role does]
-**PI/Director:** [If academic, name the PI or group lead]
+- **Title:** [Full title]
+- **Employer:** [Organisation]
+- **Location:** [City, remote/hybrid/on-site]
+- **Salary:** [If stated, otherwise "Not disclosed"]
+- **Type:** [Full-time/Part-time, Academic/Industry]
+- **Focus:** [One-sentence summary of what the role does]
+- **PI/Director:** [If academic, name the PI or group lead]
 
 **Apply:**
+
 - [Application method and link]
 
 ---
@@ -89,6 +90,13 @@ Structured breakdown of the advert. Follow this template:
 
 ---
 ```
+
+Description formatting rules:
+
+- Role-summary metadata must be a markdown bullet list using `- **Label:** value`.
+- Do not emit bare bold metadata rows such as `**Title:** ...`.
+- Leave `**Apply:**` as a standalone label followed by a blank line and a bullet list.
+- Keep a blank line before every list start so pandoc renders lists vertically.
 
 ### Output: `assessment.md`
 
