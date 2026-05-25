@@ -42,6 +42,7 @@ Claude Code does not use these files; it reads the YAML frontmatter in `SKILL.md
 | **md-format** | Writing | Formatting rules for `.md`, `.rmd`, and `.qmd` files rendered by pandoc. Enforces blank-line separation before bullet lists to prevent items collapsing horizontally. Includes verification grep commands and covers all trigger contexts (bold headings, inline emphasis labels, paragraphs ending with colons). |
 | **hugo-blog** | Publishing | End-to-end workflow for publishing posts on the Hugo personal blog. Covers the dual-file `.rmd`/`.md` pattern, hugodown rendering, file naming, YAML front matter, README sync before every push, commit message format, and common mistakes. |
 | **recommendation-letter-workflow** | Academic Applications | Full pipeline for creating and maintaining recommendation letters for PhD and postdoc applications. Quarto-based `.qmd` sources rendered to PDF. Enforces 5-section structure, specificity rules (concrete examples per section), superlative caps, programme-tailored closing sentences, and 2-page maximum length. |
+| **qmd-runner** | Debugging | Per-chunk `tryCatch` runners for Quarto notebooks. Generator parses each `.qmd`, emits a sibling `.R` runner with one `tryCatch` per `{r}` chunk, and runs them in the global environment so chunk-to-chunk state-sharing matches Quarto render semantics. Surfaces every failing chunk in one pass instead of stopping at the first error, with every fix landing in the source `.qmd`. Catalogues the common Seurat / Bioconductor / biomaRt / msigdbr failure patterns and their fixes. |
 
 ## Skill Dependencies
 
@@ -58,6 +59,7 @@ developing-r-packages       (standalone — R package conventions)
 tailoring-applications      (standalone — CV and cover letter pipeline)
 md-to-html                  (standalone — converts .md → .qmd → .html via Quarto)
 git-hygiene                 (standalone — conventional commit format and branching)
+qmd-runner                  (pairs with writing-qmd-scientific + writing-r-code; standalone otherwise)
 ```
 
 **Reading order for newcomers:**
@@ -68,7 +70,8 @@ git-hygiene                 (standalone — conventional commit format and branc
 4. `developing-r-packages` and `writing-labarchive-entries` — advanced/specialized
 5. `tailoring-applications` — CV and cover letter pipeline
 6. `md-to-html` — converting finished markdown to polished HTML
-7. `git-hygiene` — version control conventions for all repos
+7. `qmd-runner` — when a qmd render fails opaquely and you need surgical chunk-level debugging
+8. `git-hygiene` — version control conventions for all repos
 
 ## Prerequisites
 

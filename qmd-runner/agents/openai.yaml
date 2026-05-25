@@ -1,0 +1,4 @@
+interface:
+  display_name: "QMD Runner Debugging"
+  short_description: "Per-chunk tryCatch runners for .qmd notebooks"
+  default_prompt: "Use $qmd-runner to generate per-chunk tryCatch runners and iterate fixes back into the source qmd."
