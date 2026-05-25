@@ -210,17 +210,32 @@ write_rds(seu_filtered, "../checkpoints/dataset_seu_filtered.rds")
 
 ## Directory Structure
 
-- **QMD documents** assume this project layout:
+- **QMD documents** assume this project layout (see `creating-analysis-projects` for the canonical definition):
 
 ```
 project_name/
-├── read/          # Raw input data
-├── scripts/       # QMD files, R scripts, .Rproj (git root)
-├── checkpoints/   # Intermediate .rds files
-└── write/
-    ├── figures/   # Output plots
-    └── apps/      # ShinyCell2 apps
+├── read/                          # Raw input data
+├── scripts/                       # QMD files, R scripts, .Rproj (git root)
+├── checkpoints/                   # FLAT — every notebook reads upstream rds files
+│   ├── 01-merged-harmony.rds
+│   └── 02-annotated.rds
+└── write/                         # PER-SCRIPT SUBDIRECTORIES
+    ├── figures/
+    │   ├── 01-processing-pipeline/
+    │   │   └── 01-umap-celltype.pdf
+    │   └── 02-tables-visualisations/
+    │       └── 02-condition-marker-heatmap.pdf
+    ├── tables/
+    │   ├── 01-processing-pipeline/
+    │   │   └── 01-qc-summary.csv
+    │   └── 02-tables-visualisations/
+    │       └── 02-condition-markers-significant.csv
+    └── apps/                      # ShinyCell2 apps (per-script subdirs too)
 ```
+
+- `figures/` and `tables/` subdirectories are named after the qmd basename (without `.qmd`); files inside still carry the matching `NN-` step prefix
+- `checkpoints/` stays flat — downstream notebooks all read upstream checkpoints, so subdirs would obscure the shared-state nature
+- Every chunk that writes a figure or table must `dir.create("../write/figures/<NN-script-slug>", recursive = TRUE, showWarnings = FALSE)` in its Inputs block first
 
 - **Relative paths** in code always reference from `scripts/`:
   - Input data: `../read/`

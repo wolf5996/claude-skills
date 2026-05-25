@@ -83,7 +83,9 @@ seu <- seu[, seu$nFeature_RNA > 200 & seu$nFeature_RNA < 5000]
 
 ## Self-Contained Code Chunks
 
-Every code chunk must be independently executable. Follow this pattern:
+Every code chunk must be independently executable. Follow this pattern.
+
+**Processing chunk** (writes a checkpoint — flat `checkpoints/` layout):
 
 ```r
 # Libraries ----------
@@ -93,7 +95,7 @@ library(readr)
 library(dplyr)
 
 # Inputs ----------
-seu <- read_rds("../checkpoints/dataset_seu_filtered.rds")
+seu <- read_rds("../checkpoints/01-dataset-seu-filtered.rds")
 
 # Processing ----------
 seu <- SCTransform(
@@ -106,14 +108,37 @@ seu <- SCTransform(
 )
 
 # Outputs ----------
-write_rds(seu, "../checkpoints/dataset_seu_normalized.rds")
+write_rds(seu, "../checkpoints/01-dataset-seu-normalised.rds")
+```
+
+**Visualisation chunk** (writes a figure — per-script subdir under `write/figures/`; chunk lives in `01-processing-pipeline.qmd`):
+
+```r
+# Libraries ----------
+library(Seurat)
+library(BadranSeq)
+library(ggplot2)
+library(readr)
+
+# Inputs ----------
+seu <- read_rds("../checkpoints/01-dataset-clustered.rds")
+
+dir.create("../write/figures/01-processing-pipeline",
+           recursive = TRUE, showWarnings = FALSE)
+
+# Processing ----------
+plot_umap <- do_UmapPlot(seu, group.by = "celltype")
+
+# Outputs ----------
+ggsave("../write/figures/01-processing-pipeline/01-umap-celltype.pdf",
+       plot_umap, width = 8, height = 6, bg = "white")
 ```
 
 Rules:
 - **Libraries**: Declare all `library()` calls at the top of each chunk
-- **Inputs**: Load checkpoint or data files explicitly
+- **Inputs**: Load checkpoint or data files explicitly, and `dir.create()` the per-script output subdir
 - **Processing**: The analysis code
-- **Outputs**: Save checkpoint or write figures/tables
+- **Outputs**: Save checkpoint to flat `../checkpoints/` OR write figures / tables to `../write/figures/<NN-script-slug>/` and `../write/tables/<NN-script-slug>/` (see `creating-analysis-projects` for the per-script subdir convention)
 
 ## Code Sectioning Style
 
@@ -171,6 +196,10 @@ Do **NOT** use banner-style comments:
 library(BadranSeq)
 library(patchwork)
 
+# Output dir (per-script subdir under write/figures/) ----------
+dir.create("../write/figures/01-processing-pipeline",
+           recursive = TRUE, showWarnings = FALSE)
+
 # UMAP by cell type ----------
 p1 <- do_UmapPlot(seu, group.by = "celltype")
 
@@ -188,7 +217,8 @@ p5 <- EnhancedElbowPlot(seu, ndims = 30, cutoff_pc = 10)
 
 # Combine ----------
 p_combined <- p1 | p2
-ggsave("../write/figures/overview.png", p_combined, width = 16, height = 8, bg = "white")
+ggsave("../write/figures/01-processing-pipeline/01-overview.pdf",
+       p_combined, width = 16, height = 8, bg = "white")
 ```
 
 **When to fall back to SCpubr/Seurat:**
@@ -217,3 +247,5 @@ ggsave("../write/figures/overview.png", p_combined, width = 16, height = 8, bg =
 | Forgetting `JoinLayers()` before merge operations | Check layer state with `Layers(seu)` first |
 | Not saving checkpoints after major steps | Every pipeline stage gets a checkpoint |
 | Using SCpubr/Seurat for plots BadranSeq can handle | BadranSeq first — SCpubr/Seurat only as fallback |
+| `ggsave("../write/figures/foo.pdf", …)` fails with `Cannot find directory` | Each chunk must `dir.create("../write/figures/<NN-script-slug>", recursive = TRUE, showWarnings = FALSE)` before `ggsave`; outputs land in per-script subdirs (see `creating-analysis-projects`) |
+| Saving figures flat under `write/figures/` | Use the per-script subdir `write/figures/<NN-script-slug>/<NN-name>.pdf`; same for `write/tables/`. Checkpoints stay flat in `checkpoints/`. |

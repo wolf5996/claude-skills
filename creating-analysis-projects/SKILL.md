@@ -33,10 +33,21 @@ project_name/                      # ← Git repo lives HERE
 │   ├── 01-first-step.qmd
 │   ├── 02-second-step.qmd
 │   └── ...
-├── checkpoints/                   # RDS intermediates passed between pipeline steps
-└── write/                         # All pipeline outputs
-    ├── figures/                   #   Plots prefixed by step number
-    └── tables/                    #   CSVs/Excel prefixed by step number
+├── checkpoints/                   # RDS intermediates — FLAT, shared across scripts
+│   ├── 01-merged-harmony.rds
+│   └── 02-annotated.rds
+└── write/                         # All pipeline outputs — PER-SCRIPT SUBDIRECTORIES
+    ├── figures/
+    │   ├── 01-first-step/         #   Subdirectory named after the qmd basename
+    │   │   ├── 01-qc-violin.pdf   #   Each file still carries the step prefix
+    │   │   └── 01-elbow-plot.pdf
+    │   └── 02-second-step/
+    │       └── 02-umap-condition.pdf
+    └── tables/
+        ├── 01-first-step/
+        │   └── 01-qc-summary.csv
+        └── 02-second-step/
+            └── 02-condition-markers.csv
 ```
 
 ### The read / write / checkpoints triad
@@ -44,8 +55,8 @@ project_name/                      # ← Git repo lives HERE
 These three directories define how data flows through the project:
 
 - **`read/`** — raw input data and reference files. Code reads from here but **never writes to it**. This directory is the immutable ground truth. Subdirectories organise by sample or data source (e.g., `read/bmls-4/filtered_feature_bc_matrix/`). Reference files like marker databases, gene annotations, and GTFs go in `read/reference/`.
-- **`checkpoints/`** — serialised R objects (`.rds`) that pass state between pipeline steps. Each notebook reads its predecessor's checkpoint and writes its own. These are the pipeline's internal handoff mechanism. Named with step prefix: `01-merged-harmony.rds`, `02-annotated.rds`. Within a notebook, intermediate checkpoints enable self-contained chunks: `04-fibro-subset.rds` → `04-fibro-sct.rds` → `04-fibro-harmony.rds` → `04-fibro-states.rds`.
-- **`write/`** — all human-facing outputs. Split into `write/figures/` (plots saved via `safe_ggsave()`) and `write/tables/` (CSVs, Excel files saved via `readr::write_csv()`, `openxlsx`). Everything is prefixed by step number so you can tell at a glance which notebook produced it.
+- **`checkpoints/`** — serialised R objects (`.rds`) that pass state between pipeline steps. Each notebook reads its predecessor's checkpoint and writes its own. These are the pipeline's internal handoff mechanism. **Flat layout** with step-prefixed filenames: `01-merged-harmony.rds`, `02-annotated.rds`. Stay flat because every downstream notebook reads checkpoints — subdirectories would obscure the shared-state nature. Within a notebook, intermediate checkpoints enable self-contained chunks: `04-fibro-subset.rds` → `04-fibro-sct.rds` → `04-fibro-harmony.rds` → `04-fibro-states.rds`.
+- **`write/`** — all human-facing outputs. Split into `write/figures/` (plots saved via `safe_ggsave()`) and `write/tables/` (CSVs, Excel files saved via `readr::write_csv()`, `openxlsx`). **Per-script subdirectories**: every notebook writes into its own folder named after the qmd basename (`write/figures/<NN-script-slug>/`, `write/tables/<NN-script-slug>/`), and the files inside still carry the matching `NN-` step prefix on their face. Dual provenance (folder + filename prefix) so a folder listing tells you which script produced everything, and an individual file copied elsewhere still self-identifies.
 
 ### Why git at root with a scripts/ whitelist
 
@@ -66,12 +77,29 @@ All filenames use **hyphens** (`-`): `01-qc-integration.qmd`, `02-umap-singler.p
 
 All R variable and function names use **snake_case** (`_`): `seu_integrated`, `marker_results_df`, `fix_md_rownames()`
 
-### Output prefixes
+### Output organisation
 
-Every output file is prefixed with its step number:
+Outputs use a **dual provenance** scheme: a per-script subdirectory groups everything one notebook produced, and each file inside still carries the script's `NN-` step prefix so it self-identifies if copied elsewhere.
+
+**Per-script subdirectories** for `write/figures/` and `write/tables/`:
+- The subdirectory name matches the qmd basename (without `.qmd`)
+- Concrete example for `scripts/02-tables-visualisations.qmd`:
+  - `../write/figures/02-tables-visualisations/02-hypoxia-marker-violins.pdf`
+  - `../write/figures/02-tables-visualisations/02-condition-marker-heatmap.pdf`
+  - `../write/tables/02-tables-visualisations/02-condition-markers-significant.csv`
+- The chunk that writes them must `dir.create("../write/figures/02-tables-visualisations", recursive = TRUE, showWarnings = FALSE)` first (see `writing-r-code` for the chunk template)
+
+**Step-prefixed filenames** inside the subdirectory:
 - Figures: `01-elbow-pca.pdf`, `02-umap-singler.pdf`
 - Tables: `01-qc-summary.csv`, `04-fibro-markers-all.csv`
-- Checkpoints: `01-merged-harmony.rds`, `02-annotated.rds`
+
+**Checkpoints stay flat** in `checkpoints/` — never per-script subdirectories:
+- `01-merged-harmony.rds`, `02-annotated.rds`, `04-fibro-states.rds`
+- Reason: downstream notebooks all read upstream checkpoints; per-script subdirs would force every reader to know which notebook wrote which file
+
+**Why dual provenance:**
+- The folder grouping makes "find every output from script 02" a one-line `ls`
+- The filename prefix means an individual `02-condition-marker-heatmap.pdf` copied into a paper draft or shared with a collaborator still announces its origin
 
 ### Variable descriptiveness
 
@@ -97,13 +125,17 @@ Keep it practical — 2-3 words max. `seu_fibro` not `seurat_object_containing_f
 - Exception: external dependencies the user must provide (e.g., a GTF file path) get a clearly commented variable at the top of the relevant chunk
 
 ```r
-# Correct — inline at point of use
+# Correct — inline at point of use, figures go in the per-script subdir
 seu_integrated <- readr::read_rds("../checkpoints/01-merged-harmony.rds")
-safe_ggsave("../write/figures/02-umap-singler.pdf", plot_umap, width = 8, height = 6)
+safe_ggsave("../write/figures/02-second-step/02-umap-singler.pdf",
+            plot_umap, width = 8, height = 6)
 
 # Incorrect — upfront path variables
 checkpoint_dir <- "../checkpoints/"
 fig_dir <- "../write/figures/"
+
+# Incorrect — flat write/figures/ (no per-script subdir)
+safe_ggsave("../write/figures/02-umap-singler.pdf", plot_umap, width = 8, height = 6)
 ```
 
 ## Pipeline Structure
@@ -127,7 +159,9 @@ Helper functions used across multiple notebooks go in `utils.R`:
 
 ### Self-contained code chunks
 
-Every code chunk must be independently runnable. Follow the pattern from `writing-r-code`:
+Every code chunk must be independently runnable. Follow the pattern from `writing-r-code`. **Processing chunks** save intermediate checkpoints; **visualisation chunks** load the latest checkpoint, `dir.create()` the per-script output subdirectory, and save figures into it.
+
+Processing chunk (writes to flat `checkpoints/`):
 
 ```r
 # Libraries ----------
@@ -146,7 +180,30 @@ seu <- NormalizeData(seu)
 readr::write_rds(seu, "../checkpoints/01-normalized.rds")
 ```
 
-Processing chunks save intermediate checkpoints. Visualisation chunks load the latest checkpoint and save figures.
+Visualisation chunk (writes to per-script subdir; chunk lives in `02-second-step.qmd`):
+
+```r
+# Libraries ----------
+library(Seurat)
+library(BadranSeq)
+library(ggplot2)
+library(readr)
+
+source("utils.R")
+
+# Inputs ----------
+seu <- readr::read_rds("../checkpoints/01-normalized.rds")
+
+dir.create("../write/figures/02-second-step",
+           recursive = TRUE, showWarnings = FALSE)
+
+# Processing ----------
+plot_umap <- do_UmapPlot(seu, group.by = "celltype")
+
+# Outputs ----------
+ggsave("../write/figures/02-second-step/02-umap-celltype.pdf",
+       plot_umap, width = 8, height = 6, bg = "white")
+```
 
 ### Prose format
 
@@ -335,6 +392,9 @@ When setting up a new project:
 | Generic variable names (`obj`, `df`, `p`) | Descriptive names (`seu_fibro`, `composition_df`, `plot_umap_clusters`) |
 | Chunks that depend on previous chunk state | Every chunk loads its own inputs from disk |
 | Output files without step prefix | Always prefix: `01-`, `02-`, etc. |
+| Saving figures / tables flat under `write/figures/` or `write/tables/` | Use per-script subdirs: `write/figures/<NN-script-slug>/<NN-name>.pdf` and `write/tables/<NN-script-slug>/<NN-name>.csv` |
+| Forgetting to `dir.create()` the per-script output subdir | Each visualisation chunk runs `dir.create("../write/figures/<NN-script-slug>", recursive = TRUE, showWarnings = FALSE)` right after the `# Inputs ----------` block |
+| Per-script subdirs under `checkpoints/` | Checkpoints stay **flat** because downstream notebooks all read them: `checkpoints/02-annotated.rds`, not `checkpoints/02-second-step/02-annotated.rds` |
 | `readRDS()`/`saveRDS()` | `readr::read_rds()`/`readr::write_rds()` |
 | `%>%` magrittr pipe | `\|>` native pipe |
 | `here::here()` for paths | Relative `../` from `scripts/` |

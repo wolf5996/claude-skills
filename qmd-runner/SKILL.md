@@ -175,7 +175,7 @@ These come up over and over on real-world Seurat / Bioconductor pipelines. Fix t
 | Error message | Root cause | Fix in qmd |
 |---|---|---|
 | `unable to find an inherited method for function 'select' for signature 'x = "spec_tbl_df"'` | `AnnotationDbi::select` masking `dplyr::select` after `library(biomaRt)` | Add `library(conflicted)` + `conflict_prefer("select", "dplyr")` block in project `.Rprofile`; ensure `.Rprofile` is sourced before any library() call |
-| `Cannot find directory '../write/figures/...'` | `ggsave` / `pdf()` requires the parent dir to exist | Insert `dir.create("../write/figures/<subdir>", recursive = TRUE, showWarnings = FALSE)` after the chunk's `# Inputs ----------` block |
+| `Cannot find directory '../write/figures/...'` | `ggsave` / `pdf()` requires the parent dir to exist | Insert `dir.create("../write/figures/<NN-script-slug>", recursive = TRUE, showWarnings = FALSE)` after the chunk's `# Inputs ----------` block. Outputs live in per-script subdirectories matching the qmd basename — see `creating-analysis-projects` for the canonical layout. |
 | `Unable to query any Ensembl site` | biomaRt's default mirror is unresponsive | Loop through explicit mirrors and cache the result on disk: |
 | `Duplicate values in names(stats) not allowed` (from `gseGO`) | Gene-symbol → entrez mapping is many-to-many; named vector has duplicate names | De-duplicate by `entrezgene_id` and drop `NA`s before constructing the named vector |
 | `Unknown subcollection` (from `msigdbr`) | API drift — `category=` / `subcategory=` are now `collection=` / `subcollection=`, and subcollection IDs went uppercase (`MIR:MIR_LEGACY`) | Switch the parameter names and uppercase the subcollection ID |
