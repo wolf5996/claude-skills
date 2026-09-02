@@ -167,23 +167,23 @@ Create the application directory and file structure.
 ### Directory Naming
 
 ```
-{academic,industry}_applications/YYYY-MM-DD_institution_shortname/
+{academic,industry}-applications/YYYY-MM-DD-institution-shortname/
 ```
 
 Examples:
-- `academic_applications/2026-03-20_oxford_snelling/`
-- `industry_applications/2026-03-20_healx_bioinformatician/`
+- `academic-applications/2026-03-20-oxford-snelling/`
+- `industry-applications/2026-03-20-healx-bioinformatician/`
 
-Use today's date. Institution shortname should be lowercase, underscored, recognisable.
+Use today's date. Institution shortname should be lowercase, hyphenated, recognisable (see `naming-conventions`).
 
 ### Files to Create
 
 ```
-YYYY-MM-DD_institution_shortname/
+YYYY-MM-DD-institution-shortname/
 ├── description.md                                          (from Phase 1)
 ├── assessment.md                                           (from Phase 1)
-├── badran_elshenawy_<institution>_cover_letter.qmd         (empty scaffold)
-└── badran_elshenawy_<institution>_cv.qmd                   (empty scaffold)
+├── badran-elshenawy-<institution>-cover-letter.qmd         (empty scaffold)
+└── badran-elshenawy-<institution>-cv.qmd                   (empty scaffold)
 ```
 
 The QMD files should be scaffolded with the correct YAML front matter (see Formatting section) but no body content yet — that comes in Phase 3.
@@ -269,7 +269,7 @@ Same product-market fit approach, but:
 
 ### 3B: CV Tailoring
 
-Start from the master CV template at `cv_iterations/badran_elshenawy_cv_template.qmd`. Copy it into the application directory as `badran_elshenawy_<institution>_cv.qmd`, then tailor:
+Start from the master CV template at `cv-iterations/badran-elshenawy-cv-template.qmd`. Copy it into the application directory as `badran-elshenawy-<institution>-cv.qmd`, then tailor:
 
 #### Elevator Pitch (Top Section)
 
@@ -315,8 +315,8 @@ Rewrite the elevator pitch using Past → Present → Future framework, tailored
 Render both QMDs to PDF:
 
 ```bash
-quarto render badran_elshenawy_<institution>_cover_letter.qmd --to pdf
-quarto render badran_elshenawy_<institution>_cv.qmd --to pdf
+quarto render badran-elshenawy-<institution>-cover-letter.qmd --to pdf
+quarto render badran-elshenawy-<institution>-cv.qmd --to pdf
 ```
 
 After rendering, report:
@@ -330,7 +330,7 @@ If the CV exceeds 2 pages, go back to Phase 3 and trim.
 
 ## Phase 5: OUTREACH
 
-After rendering, draft a concise outreach email to the PI or hiring manager. Save as `outreach_<name>.md` in the application directory.
+After rendering, draft a concise outreach email to the PI or hiring manager. Save as `outreach-<name>.md` in the application directory.
 
 ### Finding the contact
 
@@ -567,5 +567,5 @@ For every application, confirm:
 - [ ] CV bullet ordering matches application type (academic vs industry)
 - [ ] Word limits respected (if stated in advert)
 - [ ] Both PDFs render cleanly with no LaTeX errors
-- [ ] Outreach email drafted and saved as `outreach_<name>.md`
+- [ ] Outreach email drafted and saved as `outreach-<name>.md`
 - [ ] DPhil dates: 2020-2024 (not 2025)

@@ -20,7 +20,7 @@ Scaffold R/bioinformatics analysis projects with a strict separation between cod
 The project uses a **read / write / checkpoints** triad as its core data flow architecture. This is non-negotiable — every project follows this layout:
 
 ```
-project_name/                      # ← Git repo lives HERE
+project-name/                      # ← Git repo lives HERE
 ├── .git/
 ├── .gitignore                     # Whitelist: tracks only scripts/
 ├── read/                          # Raw input data — IMMUTABLE, never modified by code
@@ -76,6 +76,8 @@ All filenames use **hyphens** (`-`): `01-qc-integration.qmd`, `02-umap-singler.p
 ### Code naming: underscores
 
 All R variable and function names use **snake_case** (`_`): `seu_integrated`, `marker_results_df`, `fix_md_rownames()`
+
+Underscores are for code identifiers only — never for filenames or directory names. `naming-conventions` holds the project-wide rule and the dated-asset pattern.
 
 ### Output organisation
 
@@ -224,7 +226,7 @@ Section descriptions use **bullet points with bold key terms**, never paragraphs
 ### Initialise git at project root
 
 ```bash
-cd project_name/
+cd project-name/
 git init
 git branch -m main
 ```
@@ -358,7 +360,7 @@ The README must clearly separate tracked vs untracked content:
 ### GitHub repo creation
 
 ```bash
-cd project_name/
+cd project-name/
 git add scripts/
 git commit -m "Initial commit: <N>-step <analysis-type> pipeline with shared utils"
 gh repo create <descriptive-project-name> --private --source=. --push \
@@ -398,4 +400,4 @@ When setting up a new project:
 | `readRDS()`/`saveRDS()` | `readr::read_rds()`/`readr::write_rds()` |
 | `%>%` magrittr pipe | `\|>` native pipe |
 | `here::here()` for paths | Relative `../` from `scripts/` |
-| Mixing hyphens and underscores in filenames | Hyphens for files, underscores for code |
+| Mixing hyphens and underscores in filenames | Hyphens for files, underscores for code (see `naming-conventions`) |

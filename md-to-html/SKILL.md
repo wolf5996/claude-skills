@@ -18,7 +18,7 @@ Convert markdown files into self-contained HTML documents by wrapping them in a 
 
 ### 2. Create the .qmd file
 
-- Use the same filename with `.qmd` extension (underscores, not hyphens)
+- Use the same filename with `.qmd` extension (hyphens, not underscores)
 - Apply this YAML header, replacing the title to match the document:
 
 ```yaml
@@ -64,14 +64,15 @@ quarto render filename.qmd
 
 ## Naming Convention
 
-- Use underscores (`_`) not hyphens (`-`) in filenames
-- If the source `.md` uses hyphens, rename to underscores for both `.qmd` and `.html`
+- Use hyphens (`-`) not underscores (`_`) in filenames
+- If the source `.md` uses underscores, rename to hyphens for both `.qmd` and `.html`
+- See `naming-conventions` for the full rule
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---------|-----|
 | Consecutive bold lines collapse into one line | Add trailing `\` for line breaks |
-| Hyphens in filenames | Rename to underscores |
+| Underscores in filenames | Rename to hyphens |
 | Altering the writing content | This skill converts only — do not restructure or rephrase |
 | Guessing the title | Read the source file and extract the actual title |

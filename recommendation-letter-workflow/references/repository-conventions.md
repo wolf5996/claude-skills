@@ -3,16 +3,16 @@
 ## Folder Layout
 
 - `template/` contains the master Quarto source.
-- `YYYY-MM-DD_institution/` contains one application package.
-- `archived_docx_letters/` stores older `.docx` and `.pdf` versions.
-- `supporting_documents/` stores applicant CVs, theses, and other reference material.
+- `YYYY-MM-DD-institution/` contains one application package.
+- `archived-docx-letters/` stores older `.docx` and `.pdf` versions.
+- `supporting-documents/` stores applicant CVs, theses, and other reference material.
 - `docs/plans/` stores planning notes and implementation documents.
 
 ## Naming
 
-- Use dated folder names: `2026-03-23_protaiomics/`.
-- Use matching filenames inside each folder, for example `protaiomics_recommendation_letter.qmd` and `protaiomics_recommendation_letter.pdf`.
-- Prefer lowercase, underscored filenames.
+- Use dated folder names: `2026-03-23-protaiomics/`.
+- Use matching filenames inside each folder, for example `protaiomics-recommendation-letter.qmd` and `protaiomics-recommendation-letter.pdf`.
+- Prefer lowercase, hyphenated filenames (see `naming-conventions`).
 - For upload forms, follow the requested naming convention exactly, often `SurnameForenameProgramme`.
 
 ## Letter Structure
